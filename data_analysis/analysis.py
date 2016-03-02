@@ -1,26 +1,16 @@
-import urllib
-import getpass
-from pymongo import MongoClient
-from pymongo import errors
+import requests
 import sys
+import json
 
 if __name__ == '__main__':
-	#connect mongodb
 
+	#get json from api
 	try :
-		client_db = MongoClient('mongodb://140.113.89.72',serverSelectionTimeoutMS=500)
-		client_db.server_info()
-
-	except errors.ServerSelectionTimeoutError as err :
+		request_data = requests.get('http://140.113.89.72:1337/test')
+	except requests.exceptions.ConnectionError as err :
 		print(err)
 		sys.exit(0)
+		
+	print(request_data.json())
 
-	#find the database is not named 'local'
-	for name in client_db.database_names():
-		if name != 'local':
-			database = client_db[name]
-			break
-
-	#get data from name_database
-	for name in database.collection_names():
-		print(name)
+	
