@@ -1,6 +1,9 @@
 import requests
 import sys
 import json
+import numpy
+import progressbar
+import time
 
 if __name__ == '__main__':
 
@@ -11,6 +14,10 @@ if __name__ == '__main__':
 		print(err)
 		sys.exit(0)
 		
-	print(request_data.json())
+	all_data = request_data.json()
 
+	#calculating
+	progress = progressbar.ProgressBar( len(all_data[0]['data']) )
+	for set in progress(all_data[0]['data']):
+		time.sleep(0.1)
 	
