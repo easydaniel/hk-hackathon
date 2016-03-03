@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>C3 bar</title>
+	<!-- Load c3.css -->
+	<link href="c3-master/c3.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="c3-bar.css">
+	<!-- Load d3.js and c3.js -->
+	<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+	<!--script src="c3-master/c3.min.js"></script-->
+
+</head>
+<body>
+	<div class="content">
+		<div id="vis"></div>
+			<input id="generate" value="Randomise data" type="button">
+	</div>
+
+
+
+
+<svg>		
+	<defs>
+	<linearGradient id="myGradient"
+            x1="-50%" y1="40%"
+            x2="50%" y2="100%"
+            spreadMethod="pad">
+      <stop offset="0%"   stop-color="#FFE066" stop-opacity="1"/>
+      <stop offset="50%" stop-color="#FFEB9B" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="1"/>
+    </linearGradient>
+	</defs>
+</svg>
+</body>
+	<script src="c3-bar.js"></script>
+</html>
+
