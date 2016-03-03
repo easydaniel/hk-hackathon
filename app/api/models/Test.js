@@ -7,8 +7,14 @@
 
 module.exports = {
   attributes: {
+    year: {
+      type: "string"
+    },
+    month: {
+      type: "string"
+    },
     data: {
       type: "array"
-    },
+    }
   }
 };
