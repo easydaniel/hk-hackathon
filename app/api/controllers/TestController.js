@@ -7,26 +7,57 @@
 
 module.exports = {
 
+  find: function(req, res, next) {
+    var payload = {}
+    if (req.query.month) {
+      payload['month'] = req.query.month;
+      payload['year'] = new Date().getFullYear();
+    }
+    if (req.query.year) {
+      payload['year'] = req.query.year;
+    }
+
+    Test.find(payload).sort('year ASC').sort('month ASC').exec(function (err, result) {
+      if (err) {
+        return res.status(403, 'Server error');
+      }
+      return res.json(result);
+    })
+  },
+
+
   create: function(req, res, next) {
-    // console.log(req.body);
+
     var payload = {
       year: req.body['year'],
       month: req.body['month'],
-      data: req.body['data']
+      data: JSON.parse(req.body['data'])
     };
-    var today = new Date();
-    if (payload['year'] === 'undefined') {
-      payload['year'] = today.getFullYear().toString();
-    }
-    if (payload['month'] === 'undefined') {
-      payload['month'] = (today.getMonth() + 1) < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1);
-    }
 
-    Test.create(payload).exec(function(err, data) {
+    console.log(payload);
+    Test.findOne({
+      year: payload.year,
+      month: payload.month
+    }).exec(function (err, result) {
       if (err) {
         return console.log(err);
       }
-      return res.json(data);
+      // console.log(result);
+      if (!result) {
+        Test.create(payload).exec(function(err, data) {
+          if (err) {
+            return console.log(err);
+          }
+          return res.json(data);
+        })
+      }
+      // result.data = payload.data;
+      // result.save(function (err, re) {
+      //   if (err) {
+      //     return console.log(err);
+      //   }
+      //   return res.json(re);
+      // })
     })
   }
 }
