@@ -26,3 +26,15 @@
 		"year": "2016"
 	}
 ]
+
+//output
+[
+	{
+		"from": "name1",
+		"to": "name2",
+		"relation": 0.999
+	},
+	{
+
+	}
+]

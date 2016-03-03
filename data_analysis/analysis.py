@@ -4,6 +4,7 @@ import json
 import numpy
 import progressbar
 import time
+import statistics
 
 class item:
 	def __init__(self, name='null-item', id=-1):
@@ -56,7 +57,20 @@ class item:
 				if float(right_length) + float(left_length) != 0 :
 					self.value[i] /= float(right_length) + float(left_length)
 
+def relation(a,b):
+	#correlatation = numpy.correlate(a,b)[0]
+	#stdev_a = statistics.stdev(a)
+	#stdev_b = statistics.stdev(b)
+	#print(correlatation / (stdev_a * stdev_b * float(len(a)) ) )
 
+	array_a = numpy.array(a)
+	array_b = numpy.array(b)
+
+	normalized_a = (array_a - statistics.mean(array_a)) / ( statistics.stdev(array_a) * len(array_a) )
+	normalized_b = (array_b - statistics.mean(array_b)) / statistics.stdev(array_b)
+	correlatation = numpy.correlate(normalized_a,normalized_b)[0]
+
+	return correlatation
 
 if __name__ == '__main__':
 
@@ -79,7 +93,7 @@ if __name__ == '__main__':
 
 	#get items
 	progress = progressbar.ProgressBar(len(all_data));
-	id_now = 0
+	number_items = 0
 	for this_month in progress(all_data) :
 		for this_item in this_month['data'] :
 
@@ -94,14 +108,38 @@ if __name__ == '__main__':
 				items[this_id].value.append(this_value)
 
 			else :
-				name_to_id[this_name] = id_now
-				tmp_item = item(name=this_name, id =id_now )
+				name_to_id[this_name] = number_items
+				tmp_item = item(name=this_name, id =number_items )
 				tmp_item.value.append(this_value)
 				items.append(tmp_item)
-				id_now += 1
+				number_items += 1
 
-
+	#do the interpolation to replace -1
 	for this_item in items :
 		this_item.interpolation()
-		print( this_item.name )
-		print( this_item.value )
+		#print( this_item.name )
+		#print( this_item.value )
+
+	#do the relation
+	progress = progressbar.ProgressBar(len(items))
+	relation_map = list( list() )
+	for a_item in progress(items):
+		tmp_list = list()
+		for b_item in items:
+			tmp_list.append( relation(a_item.value, b_item.value) )
+
+		relation_map.append(tmp_list)
+
+	#output json
+	output_json = list()
+	for i in range(len(items)):
+		for j in range(len(items)):
+			a_item = items[i]
+			b_item = items[j]
+			tmp_dict = dict()
+			tmp_dict["from"] = a_item.name
+			tmp_dict["to"] = b_item.name
+			tmp_dict["relation"] = relation_map[i][j]
+			output_json.append(tmp_dict)
+
+	print json.dumps(output_json)
