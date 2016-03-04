@@ -1,1 +1,4 @@
-request
+requests
+numpy
+progressbar
+statistics
