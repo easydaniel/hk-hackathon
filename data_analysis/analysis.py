@@ -76,7 +76,8 @@ if __name__ == '__main__':
 
 	#const value for labels
 	NAME_LABLE = 'name'
-	VALUE_LABLE = 'china'
+	#value_lable = 'china'
+	value_lable = raw_input()
 
 	#get json from api
 	try :
@@ -99,9 +100,12 @@ if __name__ == '__main__':
 
 			this_name = this_item[NAME_LABLE]
 			try:
-				this_value = float( this_item[VALUE_LABLE] )
+				this_value = float( this_item[value_lable] )
 			except ValueError:
-				this_value = -1
+				try:
+					this_value = float( this_item[value_lable].replace(',','') )
+				except ValueError:
+					this_value = -1
 
 			if this_name in name_to_id :
 				this_id = name_to_id[this_name]
