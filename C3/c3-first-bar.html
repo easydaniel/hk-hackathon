@@ -9,17 +9,38 @@
 	<link rel="stylesheet" type="text/css" href="c3-bar.css">
 	<!-- Load d3.js and c3.js -->
 	<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
-	<!--script src="c3-master/c3.min.js"></script-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+	<script src="c3-master/c3.min.js"></script>
 
 </head>
 <body>
-	<div class="content">
-		<div id="vis"></div>
-			<input id="generate" value="Randomise data" type="button">
+	<div class="navbar">
+		<div class="hk-logo">
+			<img src="hk-logo-data.png">
+		</div>
 	</div>
 
+	<div class="timeBar">
+		<input min="0" max="66" type="range" id="monthTime" value="0"/>
+		<div id="showTimebyJSON">2013-03</div>
+	</div>
+	<div class="dataBoard"> 
+		<!--input id="generate" value="Randomise data" type="button"-->
 
+		<div class="content ">
+			<div id="vis"></div>
+		</div>
 
+		<div class="dataInfo">
+			<div class="singleItemBox">
+				<div id="singleItem">
+				</div>		
+				<div id="itemNumber"><p>-</p></div>	
+				<div id="itemName">-</div>
+			</div>
+		</div>
+
+	</div>
 
 <svg>		
 	<defs>
@@ -34,6 +55,6 @@
 	</defs>
 </svg>
 </body>
-	<script src="c3-bar.js"></script>
+	<script src="bar-file.js"></script>
 </html>
 
