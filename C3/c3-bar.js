@@ -114,12 +114,12 @@ $.ajax({
 	  .on("mouseover", highlight("highlight bar"))
 	  .on("mouseout", highlight("bar"));
 
-	bar.append("text")
+	/*bar.append("text")
 	    .attr("class", "shared")
 	    .attr("x", w/2)
 	    //.attr("dy", barWidth/2)
 	    .attr("text-anchor", "middle")
-	    .text(function(d) { return d.name; });
+	    .text(function(d) { return d.name; });*/
 
 	bar.append("rect")
 	    .attr("class", "leftbar")
