@@ -7,6 +7,19 @@
 
 module.exports = {
 
+  china: function (req, res, next) {
+
+    // var chinaData = require('fs').readFileSync(__dirname + '/../../assets/analysis/china.json');
+    // return res.json(JSON.stringify(chinaData));
+    return res.json(req.param);
+  },
+
+  america: function (req, res, next) {
+
+
+    return res.json(req.param);
+  },
+
   find: function(req, res, next) {
     var payload = {}
     if (req.query.month) {

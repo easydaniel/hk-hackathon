@@ -46,4 +46,15 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  '/test/america': {
+    controller: 'TestController',
+    action: 'america'
+  },
+  '/test/china': {
+    controller: 'TestController',
+    action: 'china'
+  },
+  '/vis1': {
+    'view': 'vis1'
+  }
 };

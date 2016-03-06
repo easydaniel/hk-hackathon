@@ -1,0 +1,40 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    title C3 bar
+    // Load c3.css
+    link(href='/styles/c3.min.css', rel='stylesheet', type='text/css')
+    link(href='/styles/c3-bar.css', rel='stylesheet', type='text/css')
+    // Load d3.js and c3.js
+    script(src='/js/d3.min.js', type='text/javascript')
+    script(src='/js/jquery.min.js', type='text/javascript')
+    script(src='/js/c3.min.js')
+  body
+    .navbar
+      .hk-logo
+        img(src='/images/hk-logo-data.png')
+    .timeBar
+      input#monthTime(min='0', max='66', type='range', value='0')
+      #showTimebyJSON 2013-03
+    .dataBoard
+      // input id="generate" value="Randomise data" type="button"
+      .row
+        .content
+          #vis
+        .dataInfo
+          .singleItemBox
+            #singleItem
+            #itemNumber
+              p 
+            #itemName 
+      .row
+        #trend 
+    svg
+      defs
+        lineargradient#myGradient(x1='-50%', y1='40%', x2='50%', y2='100%', spreadmethod='pad')
+          stop(offset='0%', stop-color='#FFE066', stop-opacity='1')
+          stop(offset='50%', stop-color='#FFEB9B', stop-opacity='1')
+          stop(offset='100%', stop-color='#fff', stop-opacity='1')
+  script(src='/js/c3-bar.js')

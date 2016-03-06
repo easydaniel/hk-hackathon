@@ -5,6 +5,7 @@ import numpy
 import progressbar
 import time
 import statistics
+import sys
 
 class item:
 	def __init__(self, name='null-item', id=-1):
@@ -74,10 +75,14 @@ def relation(a,b):
 
 if __name__ == '__main__':
 
+
+	if (len(sys.argv) == 1):
+		print('python2 analysis.py <NAME>')
+		sys.exit()
 	#const value for labels
 	NAME_LABLE = 'name'
 	#value_lable = 'china'
-	value_lable = raw_input()
+	value_lable = sys.argv[1]
 
 	#get json from api
 	try :
@@ -85,7 +90,7 @@ if __name__ == '__main__':
 	except requests.exceptions.ConnectionError as err :
 		print(err)
 		sys.exit(0)
-		
+
 	all_data = request_data.json()
 
 	#name-id mapping
@@ -146,4 +151,4 @@ if __name__ == '__main__':
 			tmp_dict["relation"] = relation_map[i][j]
 			output_json.append(tmp_dict)
 
-	print json.dumps(output_json)
+	print output_json

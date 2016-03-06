@@ -1,0 +1,282 @@
+body{
+	background-color: #C9C9C9;
+  padding: 0;
+  margin: 0;
+}
+text, p{
+  font-family: "Fenton";
+}
+.navbar{
+  position: relative;
+  width: 100%;
+  height: 85px;
+  background-color: #474B54;
+  box-shadow: 0px 3px 5px black;
+}
+.hk-logo{
+  top: 15px;
+  margin-left: 15px;
+  position: relative;
+  height: 60px;
+  width: 250px;
+}
+.hk-logo img{
+  width: 240px;
+  height: auto;
+}
+.timeBar{
+  margin: 30px 0;
+  display: flex;
+  justify-content:center;
+}
+#showTimebyJSON{
+  margin-left: 10px;
+  font-size: 2em;
+  font-weight: 700;
+  font-family: "Fenton";
+  padding-top: 10px;
+}
+#monthTime{
+  width: 40%;
+}
+
+.dataBoard{
+  display: flex;
+	flex-direction: column;
+  margin: 20px auto;
+  width: 95%;
+  height: auto;
+  border-radius: 2px;
+  border:2px solid black;
+  box-shadow: 0px 3px 5px black;
+  background-color: #474B54;
+  padding: 20px;
+}
+.row {
+	display: flex;
+	flex-direction: row;
+}
+.content{
+  display: inline-block;
+  width: 60%; height: 100%;
+  min-width: 320px;
+  max-width: 2060px;
+  min-height: 480px;
+  max-height: 1000px;
+  height: 500px;
+  overflow-y: scroll;
+  border-radius: 2px;
+  border: 5px solid white;
+}
+#vis{
+  min-height: 480px;
+	max-height: 1500px;
+  width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+
+.dataInfo{
+  min-width: 320px;
+  max-width: 2060px;
+  min-height: 500px;
+  max-height: 1000px;
+  height: 500px;
+  display: inline-block;
+  margin: 0 0 0 30px;
+  width: 30%;
+  height: 100%;
+}
+.singleItemBox{
+  position: relative;
+  width: 300px;
+  min-height: 350px;
+  height: 500px;
+  border: 5px solid white;
+  border-radius: 2px;
+}
+#singleItem{
+  display: inline-block;
+  margin: 0 auto;
+  width: 300px;
+  height: 300px;
+}
+#itemName{
+  margin: 40px auto;
+  width: 70%;
+  display: block;
+  color: white;
+  font-size: 1.2em;
+}
+#itemNumber{
+  position: absolute;
+  top: 120px;
+  left: calc(50% - 75px);
+  width: 150px;
+  height: 40px;
+  text-align: center;
+  vertical-align: all;
+  font-size: 2em;
+  color: #FFE066;
+}
+#trend {
+	display: block;
+	margin: 30px;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  background-color: #C9C9C9;
+  margin: 10px 0;
+  width: 100%;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  //animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  background: #474B54;
+  border-radius: 25px;
+  border: 0px solid #000101;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  border: 0px solid #000000;
+  height: 30px;
+  width: 50px;
+  border-radius: 10px;
+  background: #E25654;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -12px;
+  border:5px solid #474B54;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #474B54;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 12.8px;
+  cursor: pointer;
+  //animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  background: #474B54;
+  border-radius: 25px;
+  border: 0px solid #000101;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  border: 0px solid #000000;
+  height: 20px;
+  width: 39px;
+  border-radius: 7px;
+  background: #474B54;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 12.8px;
+  cursor: pointer;
+  //animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  border-width: 39px 0;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #474B54;
+  border: 0px solid #000101;
+  border-radius: 50px;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+}
+input[type=range]::-ms-fill-upper {
+  background: #474B54;
+  border: 0px solid #000101;
+  border-radius: 50px;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+}
+input[type=range]::-ms-thumb {
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  border: 0px solid #000000;
+  height: 20px;
+  width: 39px;
+  border-radius: 7px;
+  background: #474B54;
+  cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #474B54;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #474B54;
+}
+
+
+
+
+
+
+.c3-chart-arcs-title{
+  fill: white;
+}
+.c3-legend-item{
+  fill: white;
+  font-size: 2em;
+}
+.c3-chart-arc > text{
+  font-size: 1.6em;
+  stroke-width: 1px;
+  stroke: white;
+}
+.c3-shapes{
+  stroke-width: 3px;
+  stroke: white;
+}
+
+rect{
+  transition: all 0.3s;
+}
+.shared, .bar, .leftlabel, .rightlabel {
+  font-size: 1em;
+  font-weight: regular;
+  fill:white;
+  font-family: 'Fenton', sans-serif;
+}
+.leftlabel, .rightlabel {
+  font-size: 2.5em;
+  font-weight: regular;
+  fill:white;
+  font-family: 'Fenton', sans-serif;
+}
+.rightbar{
+  fill: #F25F5C;
+	stroke-width: 1px;
+	stroke: white;
+	transition: stroke-width .5s;
+}
+.leftbar{
+  fill: #247BA0;
+  stroke-width: 1px;
+	stroke: white;
+	transition: stroke-width .5s;
+}
+
+.highlight rect.leftbar, .highlight rect.rightbar {
+  fill: url(#myGradient);
+  stroke-width: 5px;
+  stroke: url(#myGradient);
+  padding: 50px;
+}
+text.leftbar-text, text.rightbar-text, text.shared {
+  display: none;
+}
+.highlight text {
+  font-size: 120%;
+  display: block;
+  fill: #FFE066;
+}
