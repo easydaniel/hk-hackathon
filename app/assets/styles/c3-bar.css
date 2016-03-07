@@ -1,5 +1,12 @@
 body{
-	background-color: #C9C9C9;
+  background: linear-gradient(to bottom right,#33799d 0%, #e8ebb4 40%, rgba(255, 128, 128, 0.65) 70%);
+  //linear-gradient(90deg, rgba(255, 128, 128, 0.65) 0%, rgba(255, 164, 128, 0.65) 10%, rgba(255, 202, 128, 0.65) 20%, rgba(255, 240, 128, 0.65) 30%, rgba(232, 255, 128, 0.65) 40%, rgba(193, 255, 128, 0.65) 50%, rgba(155, 255, 128, 0.65) 60%, rgba(128, 255, 138, 0.65) 70%, rgba(128, 255, 176, 0.65) 80%, rgba(128, 255, 215, 0.65) 90%, rgba(128, 255, 253, 0.65) 100%),
+  //linear-gradient(-90deg, rgba(204, 255, 254, 0.45) 0%, rgba(204, 241, 255, 0.45) 10%, rgba(204, 225, 255, 0.45) 20%, rgba(204, 210, 255, 0.45) 30%, rgba(213, 204, 255, 0.45) 40%, rgba(229, 204, 255, 0.45) 50%, rgba(244, 204, 255, 0.45) 60%, rgba(255, 204, 251, 0.45) 70%, rgba(255, 204, 235, 0.45) 80%, rgba(255, 204, 220, 0.45) 90%, rgba(255, 204, 205, 0.45) 100%);
+  //background:
+  //linear-gradient(limegreen, transparent),
+  //linear-gradient(90deg, skyblue, transparent),
+  //linear-gradient(-90deg, coral, transparent);
+  background-blend-mode: screen;
   padding: 0;
   margin: 0;
 }
@@ -10,8 +17,8 @@ text, p{
   position: relative;
   width: 100%;
   height: 85px;
-  background-color: #E6EBE0;//#474B54;
-  box-shadow: 0px 3px 5px black;
+  background-color: #EAEAEA;//#474B54,;
+  box-shadow: 0px 5px 10px black;
 }
 .hk-logo{
   top: 15px;
@@ -30,6 +37,7 @@ text, p{
   justify-content:center;
 }
 #showTimebyJSON{
+  color: #474B54;
   margin-left: 10px;
   font-size: 2em;
   font-weight: 700;
@@ -44,12 +52,13 @@ text, p{
   display: flex;
 	flex-direction: column;
   margin: 20px auto;
-  width: 95%;
+  width: 85%;
   height: auto;
   border-radius: 2px;
-  border:2px solid black;
+  //border:2px solid black;
   box-shadow: 0px 3px 5px black;
-  background-color: #474B54;
+  background: rgba(141,153,174,0.6);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.9);
   padding: 20px;
 }
 .row {
@@ -57,8 +66,9 @@ text, p{
 	flex-direction: row;
 }
 .content{
+  //padding-bottom: 300px;
   display: inline-block;
-  width: 60%; height: 100%;
+  width: 70%; height: 100%;
   min-width: 320px;
   max-width: 2060px;
   min-height: 480px;
@@ -66,11 +76,12 @@ text, p{
   height: 500px;
   overflow-y: scroll;
   border-radius: 2px;
-  border: 5px solid white;
+  border: 5px solid #474B54;
 }
 #vis{
   min-height: 480px;
 	max-height: 1500px;
+  height: 500px
   width: 100%;
 	display: flex;
 	justify-content: center;
@@ -84,7 +95,7 @@ text, p{
   max-height: 1000px;
   height: 500px;
   display: inline-block;
-  margin: 0 0 0 30px;
+  margin: 0 0 0 5%;
   width: 30%;
   height: 100%;
 }
@@ -93,7 +104,7 @@ text, p{
   width: 300px;
   min-height: 350px;
   height: 500px;
-  border: 5px solid white;
+  border: 5px solid #474B54;
   border-radius: 2px;
 }
 #singleItem{
@@ -120,14 +131,46 @@ text, p{
   font-size: 2em;
   color: #FFE066;
 }
+.trendbox{
+  margin-bottom: 300px;
+}
+#trendName{
+  
+  border-bottom: 5px solid white;
+  float: right;
+  margin-right: 10px;
+  font-size: 3.5em;
+  color: #FFE066;
+  opacity: .4;
+  font-family: "Fenton";
+}
 #trend {
 	display: block;
 	margin: 30px;
 }
-
+.footer{
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  width: 85%;
+  height: 100px;
+  border-radius: 2px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.9);
+  background-color: rgba(141,153,174,0.5);
+  padding: 20px; 
+  text-align: center;
+}
+.footer p{
+  color:white;
+  font-size: 3em;
+  font-family: "kust";
+}
+.svg-content{
+  display: none;
+}
 input[type=range] {
   -webkit-appearance: none;
-  background-color: #C9C9C9;
+  background-color: transparent;
   margin: 10px 0;
   width: 100%;
 }
@@ -154,7 +197,7 @@ input[type=range]::-webkit-slider-thumb {
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -12px;
-  border:5px solid #474B54;
+  border:4px solid #474B54;
 }
 input[type=range]:focus::-webkit-slider-runnable-track {
   background: #474B54;
@@ -233,11 +276,19 @@ input[type=range]:focus::-ms-fill-upper {
   stroke-width: 1px;
   stroke: white;
 }
-.c3-shapes{
+.c3-axis{
+  fill:#474B54;
+}
+.singleItemBox.c3-shapes{
   stroke-width: 3px;
   stroke: white;
 }
-
+.c3 .c3-axis path, .c3 .c3-axis line {
+  stroke:#474B54;
+}
+.c3 .c3-circle{
+  transition: r .2s ease;
+}
 rect{
   transition: all 0.3s;
 }
@@ -252,6 +303,7 @@ rect{
   font-weight: regular;
   fill:white;
   font-family: 'Fenton', sans-serif;
+  cursor: pointer;
 }
 .rightbar{
   fill: #F25F5C;
@@ -265,11 +317,10 @@ rect{
 	stroke: white;
 	transition: stroke-width .5s;
 }
-
 .highlight rect.leftbar, .highlight rect.rightbar {
-  fill: url(#myGradient);
+  fill: #474B54;
   stroke-width: 5px;
-  stroke: url(#myGradient);
+  stroke: #474B54;
   padding: 50px;
 }
 text.leftbar-text, text.rightbar-text, text.shared {
@@ -278,5 +329,13 @@ text.leftbar-text, text.rightbar-text, text.shared {
 .highlight text {
   font-size: 120%;
   display: block;
-  fill: #FFE066;
+  fill: #474B54;
+}
+.click-highlight text{
+  font-size: 120%;
+  display: block;
+  fill: #474B54;
+}
+.highlight-label{
+  fill: #474B54;
 }

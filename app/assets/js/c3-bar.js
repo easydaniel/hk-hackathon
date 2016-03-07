@@ -6,7 +6,8 @@ var rng;
 var theYear;
 var theMonth;
 var nowHover = {};
-
+var nowclick;
+var nowstate = {};
 
 $.ajax({
   url: "http://140.113.89.72:1337/test",
@@ -41,7 +42,7 @@ $.ajax({
       yScale = d3.scale.linear().domain([0, data.length]).range([0, h - topMargin]),
       total = d3.scale.sqrt().domain([0, dataRange]).range([0, chartWidth - labelSpace]).clamp(true),
       commas = d3.format(",.0f"),
-      gap = barWidth * 0.2;
+      gap = barWidth * 0.4;
     /* main panel */
     var vis = d3.select("#vis").append("svg")
       .attr("width", w)
@@ -70,15 +71,16 @@ $.ajax({
       .enter().append("g")
       .attr("class", "bar")
       .attr("transform", function(d, i) {
-        return "translate(0," + (yScale(i) + topMargin) + ")";
-      });
+        return "translate(0," + (yScale(i)*2 + topMargin) + ")";
+      })
 
     var wholebar = bar.append("rect")
       .attr("class", "onebar")
       .attr("width", w)
       .attr("height", barWidth - gap)
       .attr("fill", "none")
-      .attr("pointer-events", "all");
+      .attr("pointer-events", "all")
+      //.on('click', function(d,i){ d3.select(this).style("fill", "red"); });
 
     var singleDataChart = c3.generate({
       bindto: '#singleItem',
@@ -131,6 +133,9 @@ $.ajax({
             format: '%Y-%m'
           }
         }
+      },
+      point: {
+        r: 5
       }
     });
 
@@ -144,15 +149,30 @@ $.ajax({
 
         nowHover = d;
 
+        $(this).click(function() {
+          nowclick = d;
+
+          singleDataChart.load({
+            columns: [
+              ['America', nowclick.america],
+              ['China', nowclick.china],
+            ]
+          });
+          document.querySelector("#itemName").innerHTML = nowclick.name;
+          document.querySelector("#trendName").innerHTML = nowclick.name;
+
+          //bar.on("click", highlight("click-highlight bar"))
+        });
+
         var trendAmerica = ["America"].concat(Jdata.map(function(item) {
           var f = item.data.find(function(i) {
-            return i.name === nowHover.name;
+            return i.name === nowclick.name;
           })
           return f === 'undefined' ? 0 : parseFloat(f.america.toString().replace(',', ''));
         }));
         var trendChina = ["China"].concat(Jdata.map(function(item) {
           var f = item.data.find(function(i) {
-            return i.name === nowHover.name;
+            return i.name === nowclick.name;
           })
           return f === 'undefined' ? 0 : parseFloat(f.china.toString().replace(',', ''));
         }));
@@ -165,30 +185,33 @@ $.ajax({
           columns: [
             timeline,
             trendAmerica,
-            trendChina
-          ]
+            trendChina,
+          ],
+          colors: {
+            America: '#247BA0',
+            China: '#F25F5C',
+          },
+          point:{
+            r:3,
+            focus:{
+              expand:{
+                r:3.5
+              }
+            }
+          }
         })
-
-
-        singleDataChart.load({
-          columns: [
-            ['America', nowHover.america],
-            ['China', nowHover.china],
-          ]
-        });
-        document.querySelector("#itemName").innerHTML = nowHover.name;
       };
     };
     bar
       .on("mouseover", highlight("highlight bar"))
       .on("mouseout", highlight("bar"));
-    //
-    // bar.append("text")
-    //     .attr("class", "shared")
-    //     .attr("x", w/2)
-    //     //.attr("dy", barWidth/2)
-    //     .attr("text-anchor", "middle")
-    //     .text(function(d) { return d.name; });
+    
+     bar.append("text")
+         .attr("class", "shared")
+         .attr("x", w/2)
+         //.attr("dy", barWidth/2)
+         .attr("text-anchor", "middle")
+         .text(function(d) { return d.name; });
 
     bar.append("rect")
       .attr("class", "leftbar")
@@ -225,13 +248,16 @@ $.ajax({
         return d.china;
       });
 
-    /*d3.select("#generate").on("click", function() {
-      for (var i=0; i<data.length; i++) {
-        data[i].america = Math.random() * dataRange;
-        data[i].china = Math.random() * dataRange;
-      }
+    d3.select(".rightlabel").on("click", function() {
+      console.log("yo");
+      tempMonthData = data;
+      sortDatabyChina(tempMonthData);
+        for (var i=0; i<data.length; i++) {
+          data[i].america = tempMonthData[i].america;
+          data[i].china = tempMonthData[i].china;
+        }
       refresh(data);
-    });*/
+    });
 
 
     refresh(data);
@@ -241,7 +267,7 @@ $.ajax({
     function resize() {
 
       w = parseInt(d3.select(".content").style("width"), 10);
-      h = 15 * data.length;
+      h = 20 * data.length;
       labelSpace = 30 + w / 100;
       innerMargin = w / 2 + labelSpace;
       dataRange = 2500;
@@ -251,7 +277,7 @@ $.ajax({
         yScale = d3.scale.linear().domain([0, data.length]).range([0, h - topMargin]),
         total = d3.scale.sqrt().domain([0, dataRange]).range([0, chartWidth - labelSpace]).clamp(true),
         commas = d3.format(",.0f");
-      gap = barWidth * 0.2;
+      gap = barWidth * 0.4;
 
       var vis = d3.select("svg")
         .attr("width", w)
@@ -262,13 +288,18 @@ $.ajax({
         .text(leftLabel)
         .attr("x", w - innerMargin - 5)
         .attr("y", topMargin - 3)
-        .attr("text-anchor", "end");
+        .attr("text-anchor", "end")
+        .on("click", handleClick);
 
       /* barData2 title label */
       vis.select(".rightlabel")
         .text(rightLabel)
         .attr("x", innerMargin + 5)
-        .attr("y", topMargin - 3);
+        .attr("y", topMargin - 3)
+        //.on("click", handleClick)
+        //.on("click", handleClick);
+
+        //.on('click', function(){ d3.select(this).style("fill","#FFE066");});
 
       var wholebar = vis.selectAll(".onebar")
         .attr("width", w)
@@ -314,18 +345,19 @@ $.ajax({
           return innerMargin + total(d.china) - 1 * labelSpace;
         })
         .attr("dx", 10)
-        // .attr("dy", "1em");
+
+      //d3.select(".rightlabel").on("click",sortChina);
 
     }
 
     function refresh(data) {
 
       var bars = d3.selectAll("g.bar")
-        .data(data);
+        //.data(data);
 
       bars.selectAll(".shared")
-        .text(function(d) {
-          return d.name;
+        .text(function(data) {
+          return data.name;
         });
 
       bars.selectAll("rect.leftbar")
@@ -394,7 +426,6 @@ $.ajax({
       });
     }
 
-
     function sortDatabyAmerica(data) {
       data.sort(function(a, b) {
         return parseFloat(b.america) - parseFloat(a.america);
@@ -419,6 +450,15 @@ $.ajax({
           data[i].china = 0;
         }
       }
+    }
+
+    function handleClick(d, i) {
+          d3.select(this).classed("highlight-label", !d3.select(this).classed("highlight-label"));
+        }
+
+    function sortChina(){
+        sortDatabyChina(data);
+        refresh(data);
     }
 
   },
