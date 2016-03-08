@@ -1,6 +1,7 @@
 console.log("ready!");
 var totalMonth;
 var tempMonthData;
+var importData, exportData;
 var data;
 var dataOfTotalMoney;
 
@@ -16,51 +17,54 @@ var DANIEL_CALL_IT_state = 0;
 
 var Input_Output_state;
 
+$.ajax({
+  url: "http://140.113.89.72:1337/out",
+  type: "GET",
+  dataType: "json",
+  success: function(Jdata) {
+    exportData = Jdata;
+  },
+  error: function() {
+    console.log("outport ERROR!!!");
+  }
+
+});
+
+$.ajax({
+  url: "http://140.113.89.72:1337/test",
+  type: "GET",
+  dataType: "json",
+  success: function(Jdata) {
+    importData = Jdata;
+  },
+  error: function() {
+    console.log("import ERROR!!!");
+  }
+
+});
+
 $(".import").on("click", function(){
 
   Input_Output_state = 0;
 
   $(this).addClass('active');
-  $('.outport').removeClass('active');
-
-  $.ajax({
-    url: "http://140.113.89.72:1337/test",
-    type: "GET",
-    dataType: "json",
-    success: function(Jdata) {
-      totalMonth = Jdata;
-      draw();
-    },
-    error: function() {
-      console.log("import ERROR!!!");
-    }
-
-  });
+  $('.export').removeClass('active');
+  drow(importData);
 });
 
-$(".outport").on("click", function(){
+$(".export").on("click", function(){
 
   Input_Output_state = 1;
 
   $(this).addClass('active');
   $('.import').removeClass('active');
-
-  $.ajax({
-    url: "http://140.113.89.72:1337/out",
-    type: "GET",
-    dataType: "json",
-    success: function(Jdata) {
-      totalMonth = Jdata;
-      draw();
-    },
-    error: function() {
-      console.log("outport ERROR!!!");
-    }
-
-  });
+  drow(exportData);
 });
 
-function draw(){
+function drow(Daniel_told_me_this_is_data){
+
+  totalMonth = Daniel_told_me_this_is_data;
+
   d3.select("svg").remove();
   data = totalMonth[0].data;
   data = takeOutTotalMoney(data);
