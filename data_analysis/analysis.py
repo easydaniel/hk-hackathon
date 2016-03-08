@@ -76,17 +76,32 @@ def relation(a,b):
 if __name__ == '__main__':
 
 
-	if (len(sys.argv) == 1):
-		print('python2 analysis.py <NAME>')
+	if (len(sys.argv) <= 1):
+		print('python2 analysis.py <MODE>')
+		print('MODE :')
+		print('\t0 <LABEL_NAME> - import item-to-item relation')
+		print('\t1 <LABEL_NAME> - export item-to-item relation')
+		#print('\t\t2 - America-to-China relation')
 		sys.exit()
+
 	#const value for labels
+	IMPORT_ITEM_MODE = 0;
+	EXPORT_ITEM_MODE = 1;
+	AMERICA_CHINA_MODE = 2;
 	NAME_LABLE = 'name'
+
+	operation_mode = int(sys.argv[1])
 	#value_lable = 'china'
-	value_lable = sys.argv[1]
+	if( operation_mode == IMPORT_ITEM_MODE or operation_mode == EXPORT_ITEM_MODE ):
+		value_lable = sys.argv[2]
+	#else if( operation_mode = AMERICA_CHINA_MODE )
 
 	#get json from api
 	try :
-		request_data = requests.get('http://140.113.89.72:1337/test')
+		if operation_mode == IMPORT_ITEM_MODE or operation_mode == AMERICA_CHINA_MODE :
+			request_data = requests.get('http://140.113.89.72:1337/test')
+		elif operation_mode == EXPORT_ITEM_MODE :
+			request_data = requests.get('http://140.113.89.72:1337/out')
 	except requests.exceptions.ConnectionError as err :
 		print(err)
 		sys.exit(0)
@@ -142,6 +157,8 @@ if __name__ == '__main__':
 	#output json
 	output_json = list()
 	for i in range(len(items)):
+
+		tmp_list = list()
 		for j in range(len(items)):
 			a_item = items[i]
 			b_item = items[j]
@@ -149,6 +166,9 @@ if __name__ == '__main__':
 			tmp_dict["from"] = a_item.name
 			tmp_dict["to"] = b_item.name
 			tmp_dict["relation"] = relation_map[i][j]
-			output_json.append(tmp_dict)
+			tmp_list.append(tmp_dict)
+
+		tmp_list_sorted = sorted(tmp_list, reverse=True, key=lambda x: abs(x['relation']) )
+		output_json.extend( tmp_list_sorted[:10])
 
 	print output_json
