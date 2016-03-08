@@ -14,7 +14,7 @@ body{
   scrollbar-face-color: slategray;
   scrollbar-track-color: #b8c0c8;
 }
-#0CF
+//#0CF
 text, p{
   font-family: "Fenton";
 }
@@ -36,21 +36,51 @@ text, p{
   width: 270px;
   height: auto;
 }
+.statebar{
+  align-items: center;
+  justify-content: center;
+}
+.InOutport{
+  width: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.portBox{
+  display: flex;
+}
+.import,.outport{
+  padding: 5px;
+  max-width: 50%;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1.5em;
+  font-weight: 600;
+  border: 3px solid transparent;
+  color:#474B54;
+}
+.import.active,.outport.active{
+  color: white;
+  background-color: #FFE066;
+  border-radius: 10px;
+  border: 3px solid #474B54;
+  transition: all .3s ease;
+}
 .timeBar{
+  width: 50%;
   margin: 30px 0;
   display: flex;
-  justify-content:center;
 }
 #showTimebyJSON{
   color: #474B54;
   margin-left: 10px;
-  font-size: 2em;
+  font-size: 1.5em;
   font-weight: 700;
   font-family: "Fenton";
   padding-top: 10px;
 }
 #monthTime{
-  width: 40%;
+  width: 80%;
 }
 .visBox{
   width: 100%;
@@ -335,21 +365,22 @@ rect{
 }
 .leftlabel, .rightlabel {
   font-size: 2.5em;
-  font-weight: regular;
+  font-weight: 700;
   fill:#474B54;
   font-family: 'Fenton', sans-serif;
   cursor: pointer;
-  transition: all .3s ease;
+  stroke-width:1px;
+  transition: all .25s ease;
 }
 .rightbar{
   fill: #F25F5C;
-	stroke-width: 1px;
+	stroke-width: 2px;
 	stroke: white;
 	transition: stroke-width .5s;
 }
 .leftbar{
   fill: #247BA0;
-  stroke-width: 1px;
+  stroke-width: 2px;
 	stroke: white;
 	transition: stroke-width .5s;
 }
@@ -358,6 +389,7 @@ rect{
   stroke-width: 3px;
   stroke: #474B54;
   padding: 50px;
+  transition: all .4s ease;
 }
 text.leftbar-text, text.rightbar-text, text.shared {
   display: none;
@@ -389,5 +421,22 @@ text.leftbar-text, text.rightbar-text, text.shared {
   }
   .dataInfo{
     width: 95%;
+  }
+  .InOutport{
+    margin:5px 0 0  5%;
+    width: 90%;
+  }
+  .timeBar{
+    margin-left: 5%;
+    width: 90%;
+  }
+  #monthTime{
+    width: 75%;
+  }
+  #showTimebyJSON{
+    font-size:1em;
+  }
+  .footer{
+    height: 250px;
   }
 }
