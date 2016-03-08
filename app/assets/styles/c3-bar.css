@@ -1,15 +1,19 @@
 body{
-  background: linear-gradient(to bottom right,#33799d 0%, #e8ebb4 40%, rgba(255, 128, 128, 0.65) 70%);
+  background: linear-gradient(to bottom right,#3C91BC 0%, #9AB87A 50%, rgba(255, 128, 128, 0.65) 80%);
   //linear-gradient(90deg, rgba(255, 128, 128, 0.65) 0%, rgba(255, 164, 128, 0.65) 10%, rgba(255, 202, 128, 0.65) 20%, rgba(255, 240, 128, 0.65) 30%, rgba(232, 255, 128, 0.65) 40%, rgba(193, 255, 128, 0.65) 50%, rgba(155, 255, 128, 0.65) 60%, rgba(128, 255, 138, 0.65) 70%, rgba(128, 255, 176, 0.65) 80%, rgba(128, 255, 215, 0.65) 90%, rgba(128, 255, 253, 0.65) 100%),
   //linear-gradient(-90deg, rgba(204, 255, 254, 0.45) 0%, rgba(204, 241, 255, 0.45) 10%, rgba(204, 225, 255, 0.45) 20%, rgba(204, 210, 255, 0.45) 30%, rgba(213, 204, 255, 0.45) 40%, rgba(229, 204, 255, 0.45) 50%, rgba(244, 204, 255, 0.45) 60%, rgba(255, 204, 251, 0.45) 70%, rgba(255, 204, 235, 0.45) 80%, rgba(255, 204, 220, 0.45) 90%, rgba(255, 204, 205, 0.45) 100%);
   //background:
   //linear-gradient(limegreen, transparent),
   //linear-gradient(90deg, skyblue, transparent),
   //linear-gradient(-90deg, coral, transparent);
-  background-blend-mode: screen;
+  //background-blend-mode: screen;
   padding: 0;
   margin: 0;
+
+  scrollbar-face-color: slategray;
+  scrollbar-track-color: #b8c0c8;
 }
+
 text, p{
   font-family: "Fenton";
 }
@@ -17,7 +21,7 @@ text, p{
   position: relative;
   width: 100%;
   height: 85px;
-  background-color: #EAEAEA;//#474B54,;
+  background-color: rgba(253,255,252,.6);//#474B54,#EAEAEA;
   box-shadow: 0px 5px 10px black;
 }
 .hk-logo{
@@ -47,7 +51,10 @@ text, p{
 #monthTime{
   width: 40%;
 }
-
+.visBox{
+  width: 100%;
+  height: auto;
+}
 .dataBoard{
   display: flex;
 	flex-direction: column;
@@ -57,7 +64,7 @@ text, p{
   border-radius: 2px;
   //border:2px solid black;
   box-shadow: 0px 3px 5px black;
-  background: rgba(141,153,174,0.6);
+  background: rgba(253,255,252,.3);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.9);
   padding: 20px;
 }
@@ -66,9 +73,9 @@ text, p{
 	flex-direction: row;
 }
 .content{
-  //padding-bottom: 300px;
   display: inline-block;
-  width: 70%; height: 100%;
+  width: 95%;
+  height: 100%;
   min-width: 320px;
   max-width: 2060px;
   min-height: 480px;
@@ -86,8 +93,23 @@ text, p{
 	display: flex;
 	justify-content: center;
 }
+/* Scrollbar style*/
+::-webkit-scrollbar {
+  width: .8em;
+  height: 0.5em;
+}
 
+::-webkit-scrollbar-thumb {
+  background: #474B54;
+}
 
+::-webkit-scrollbar-track {
+  background: rgba(141,153,174,0.3);
+}
+.singleBox{
+  width: 30%;
+  height: auto;
+}
 .dataInfo{
   min-width: 320px;
   max-width: 2060px;
@@ -95,16 +117,15 @@ text, p{
   max-height: 1000px;
   height: 500px;
   display: inline-block;
-  margin: 0 0 0 5%;
   width: 30%;
   height: 100%;
+  border: 5px solid #474B54;
 }
 .singleItemBox{
   position: relative;
   width: 300px;
   min-height: 350px;
   height: 500px;
-  border: 5px solid #474B54;
   border-radius: 2px;
 }
 #singleItem{
@@ -113,11 +134,22 @@ text, p{
   width: 300px;
   height: 300px;
 }
+.visName,.InfoName{
+  margin-bottom: 30px;
+  display: block;
+  border-bottom: 5px solid #FFE066;
+  float: left;
+  margin-right: 10px;
+  font-size: 2em;
+  color: #474B54;
+  font-weight: 700;
+  font-family: "Fenton";
+}
 #itemName{
   margin: 40px auto;
   width: 70%;
   display: block;
-  color: white;
+  color: #474B54;
   font-size: 1.2em;
 }
 #itemNumber{
@@ -132,16 +164,18 @@ text, p{
   color: #FFE066;
 }
 .trendbox{
-  margin-bottom: 300px;
+  margin:0 auto;
+  width: 95%;
+  margin-top: 80px;
+  margin-bottom: 100px;
 }
 #trendName{
-  
-  border-bottom: 5px solid white;
+  border-bottom: 5px solid #FFE066;
   float: right;
   margin-right: 10px;
-  font-size: 3.5em;
-  color: #FFE066;
-  opacity: .4;
+  font-size: 2em;
+  color: #474B54;
+  font-weight: 700;
   font-family: "Fenton";
 }
 #trend {
@@ -153,15 +187,15 @@ text, p{
   flex-direction: column;
   margin: 20px auto;
   width: 85%;
-  height: 100px;
+  height: 200px;
   border-radius: 2px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.9);
-  background-color: rgba(141,153,174,0.5);
+  background-color: rgba(253,255,252,.4);
   padding: 20px; 
   text-align: center;
 }
 .footer p{
-  color:white;
+  color:#474B54;
   font-size: 3em;
   font-family: "kust";
 }
@@ -265,16 +299,16 @@ input[type=range]:focus::-ms-fill-upper {
 
 
 .c3-chart-arcs-title{
-  fill: white;
+  fill: #474B54;
 }
 .c3-legend-item{
-  fill: white;
+  fill: #474B54;
   font-size: 2em;
 }
 .c3-chart-arc > text{
   font-size: 1.6em;
   stroke-width: 1px;
-  stroke: white;
+  stroke: #474B54;
 }
 .c3-axis{
   fill:#474B54;
@@ -301,7 +335,7 @@ rect{
 .leftlabel, .rightlabel {
   font-size: 2.5em;
   font-weight: regular;
-  fill:white;
+  fill:#474B54;
   font-family: 'Fenton', sans-serif;
   cursor: pointer;
 }
@@ -338,4 +372,17 @@ text.leftbar-text, text.rightbar-text, text.shared {
 }
 .highlight-label{
   fill: #474B54;
+}
+
+@media(max-width: 480px) {
+  .row {
+    display: flex;
+    flex-direction: column;
+  }
+  .singleBox{
+    width: 100%;
+  }
+  .dataInfo{
+    width: 95%;
+  }
 }

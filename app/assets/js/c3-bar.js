@@ -1,13 +1,13 @@
 console.log("ready!");
 var totalMonth;
-var tempMonth;
+var tempMonthData;
 var data;
 var rng;
 var theYear;
 var theMonth;
 var nowHover = {};
 var nowclick;
-var nowstate = {};
+var DANIEL_CALL_IT_state = {};
 
 $.ajax({
   url: "http://140.113.89.72:1337/test",
@@ -22,7 +22,9 @@ $.ajax({
 
 
     cleanData(data);
-    sortDatabyAmerica(data);
+    data= data.sort(function(i, j) {
+      return j.america - i.america;
+    });
 
     var w = parseInt(d3.select(".content").style("width"), 10),
       h = 20 * data.length,
@@ -147,9 +149,10 @@ $.ajax({
           return i === j;
         }).attr("class", c);
 
-        nowHover = d;
 
+        nowHover = d;
         $(this).click(function() {
+          
           nowclick = d;
 
           singleDataChart.load({
@@ -160,46 +163,56 @@ $.ajax({
           });
           document.querySelector("#itemName").innerHTML = nowclick.name;
           document.querySelector("#trendName").innerHTML = nowclick.name;
-
+          /* detect for font size*/
+          var fontSize = $('#trendName'),
+              textLength = fontSize.text().length;
+          //console.log(textLength);
+          if(textLength > 30) {
+              fontSize.css('font-size', '1.4em');
+          } else if(textLength > 20) {
+              fontSize.css('font-size', '2em');
+          } else if(textLength > 10) {
+              fontSize.css('font-size', '3em');
+          }
           //bar.on("click", highlight("click-highlight bar"))
-        });
 
-        var trendAmerica = ["America"].concat(Jdata.map(function(item) {
-          var f = item.data.find(function(i) {
-            return i.name === nowclick.name;
-          })
-          return f === 'undefined' ? 0 : parseFloat(f.america.toString().replace(',', ''));
-        }));
-        var trendChina = ["China"].concat(Jdata.map(function(item) {
-          var f = item.data.find(function(i) {
-            return i.name === nowclick.name;
-          })
-          return f === 'undefined' ? 0 : parseFloat(f.china.toString().replace(',', ''));
-        }));
+       var trendAmerica = ["America"].concat(Jdata.map(function(item) {
+            var f = item.data.find(function(i) {
+              return i.name === nowclick.name;
+            })
+            return f === 'undefined' ? 0 : parseFloat(f.america.toString().replace(',', ''));
+          }));
+          var trendChina = ["China"].concat(Jdata.map(function(item) {
+            var f = item.data.find(function(i) {
+              return i.name === nowclick.name;
+            })
+            return f === 'undefined' ? 0 : parseFloat(f.china.toString().replace(',', ''));
+          }));
 
-        var timeline = ["x"].concat(Jdata.map(function(item) {
-          return item.year + "-" + item.month + "-01";
-        }))
+          var timeline = ["x"].concat(Jdata.map(function(item) {
+            return item.year + "-" + item.month + "-01";
+          }))
 
-        trendChart.load({
-          columns: [
-            timeline,
-            trendAmerica,
-            trendChina,
-          ],
-          colors: {
-            America: '#247BA0',
-            China: '#F25F5C',
-          },
-          point:{
-            r:3,
-            focus:{
-              expand:{
-                r:3.5
+          trendChart.load({
+            columns: [
+              timeline,
+              trendAmerica,
+              trendChina,
+            ],
+            colors: {
+              America: '#247BA0',
+              China: '#F25F5C',
+            },
+            point:{
+              r:3,
+              focus:{
+                expand:{
+                  r:3.5
+                }
               }
             }
-          }
-        })
+          })
+        });
       };
     };
     bar
@@ -248,7 +261,7 @@ $.ajax({
         return d.china;
       });
 
-    d3.select(".rightlabel").on("click", function() {
+    /*d3.select(".rightlabel").on("click", function() {
       console.log("yo");
       tempMonthData = data;
       sortDatabyChina(tempMonthData);
@@ -257,10 +270,9 @@ $.ajax({
           data[i].china = tempMonthData[i].china;
         }
       refresh(data);
-    });
+    });*/
 
 
-    refresh(data);
     resize();
     d3.select(window).on("resize", resize);
 
@@ -296,10 +308,6 @@ $.ajax({
         .text(rightLabel)
         .attr("x", innerMargin + 5)
         .attr("y", topMargin - 3)
-        //.on("click", handleClick)
-        //.on("click", handleClick);
-
-        //.on('click', function(){ d3.select(this).style("fill","#FFE066");});
 
       var wholebar = vis.selectAll(".onebar")
         .attr("width", w)
@@ -331,11 +339,11 @@ $.ajax({
         .attr("dx", -10)
 
       bar.selectAll(".rightbar")
-        .attr("width", function(d) {
-          return total(d.china)
-        })
         .attr("x", function(d) {
           return innerMargin - 1 * labelSpace;
+        })
+        .attr("width", function(d) {
+          return total(d.china)
         })
         .attr("height", barWidth - gap);
 
@@ -346,53 +354,96 @@ $.ajax({
         })
         .attr("dx", 10)
 
-      //d3.select(".rightlabel").on("click",sortChina);
+      d3.select(".rightlabel").on("click", function(e) {
+        d3.select(this).style("fill", "#FFE066");
+        d3.select('.leftlabel').style("fill", "#474B54");
+        refresh('china');
+      });
 
+      d3.select(".leftlabel").on("click", function(e) {
+        d3.select(this).style("fill", "#FFE066");
+        d3.select('.rightlabel').style("fill", "#474B54");
+        refresh('america');
+      });
     }
 
-    function refresh(data) {
+    function refresh(tag) { 
+      sortedData = [];
+      if (tag === 'america') {
+          sortedData = data.sort(function(i, j) {
+            return j.america - i.america;
+          });
+      } else if (tag == 'china') {
+          sortedData = data.sort(function(i, j) {
+            return j.china - i.china;
+          });
+      }
+      else { sortedData = data; }
 
-      var bars = d3.selectAll("g.bar")
-        //.data(data);
+      var bars = d3.selectAll("g.bar");
+      bars.remove();
+      /*female bars and data labels */
+      var bar = vis.selectAll("g.bar")
+        .data(sortedData)
+        .enter().append("g")
+        .attr("class", "bar")
+        .attr("transform", function(d, i) {
+          return "translate(0," + (yScale(i)*2 + topMargin) + ")";
+        })
 
-      bars.selectAll(".shared")
-        .text(function(data) {
-          return data.name;
-        });
+      var wholebar = bar.append("rect")
+        .attr("class", "onebar")
+        .attr("width", w)
+        .attr("height", barWidth - gap)
+        .attr("fill", "none")
+        .attr("pointer-events", "all")
+        //.on('click', function(d,i){ d3.select(this).style("fill", "red"); });
+      bar
+        .on("mouseover", highlight("highlight bar"))
+        .on("mouseout", highlight("bar"));
+      
+       bar.append("text")
+           .attr("class", "shared")
+           .attr("x", w/2)
+           //.attr("dy", barWidth/2)
+           .attr("text-anchor", "middle")
+           .text(function(d) { return d.name; });
 
-      bars.selectAll("rect.leftbar")
-        .transition()
+      bar.append("rect")
+        .attr("class", "leftbar")
+        .attr("height", barWidth - gap)
         .attr("x", function(d) {
-          return innerMargin - total(d.america) - 1 * labelSpace;
+          return innerMargin - total(d.america) - 2 * labelSpace;
         })
         .attr("width", function(d) {
           return total(d.america)
-        });
-      bars.selectAll("rect.rightbar")
-        .transition()
-        .attr("x", function(d) {
-          return innerMargin - 1 * labelSpace;
         })
+
+      bar.append("rect")
+        .attr("class", "rightbar")
+        .attr("height", barWidth - gap)
+        .attr("x", innerMargin)
         .attr("width", function(d) {
-          return total(d.china);
+          return total(d.china)
+        })
+
+      bar.append("text")
+        .attr("class", "leftbar-text")
+        .attr("dx", -10)
+        .attr("dy", ".65em")
+        .attr("text-anchor", "end")
+        .text(function(d) {
+          return d.america;
         });
 
-      bars.selectAll("text.leftbar-text")
+      bar.append("text")
+        .attr("class", "rightbar-text")
+        .attr("dx", 5)
+        .attr("dy", ".65em")
         .text(function(d) {
-          return commas(d.america);
-        })
-        .transition()
-        .attr("x", function(d) {
-          return innerMargin - total(d.america) - 1 * labelSpace;
-        })
-      bars.selectAll("text.rightbar-text")
-        .text(function(d) {
-          return commas(d.china);
-        })
-        .transition()
-        .attr("x", function(d) {
-          return innerMargin + total(d.china) - 1 * labelSpace;;
+          return d.china;
         });
+        resize();
     }
 
     rng = document.querySelector("#monthTime");
@@ -405,38 +456,23 @@ $.ajax({
         //window.requestAnimationFrame(function () {
         //  document.querySelector("#showTime").innerHTML = rng.value;
         //});
+        console.log(rng.value);
 
-        var tempMonthData = totalMonth[rng.value].data;
+        data = totalMonth[rng.value].data;
         theYear = totalMonth[rng.value].year;
         theMonth = totalMonth[rng.value].month;
+        cleanData(data);
+
+        setTimeout(function(){refresh(data);}, 100);
 
         window.requestAnimationFrame(function() {
           document.querySelector("#showTimebyJSON").innerHTML = theYear + "-" + theMonth;
         });
-
-        cleanData(tempMonthData);
-        sortDatabyAmerica(tempMonthData);
-        for (var i = 0; i < tempMonthData.length; i++) {
-          data[i].america = tempMonthData[i].america;
-          data[i].china = tempMonthData[i].china;
-          data[i].name = tempMonthData[i].name;
-        }
-
-        refresh(data);
+        
       });
+      
     }
 
-    function sortDatabyAmerica(data) {
-      data.sort(function(a, b) {
-        return parseFloat(b.america) - parseFloat(a.america);
-      });
-    }
-
-    function sortDatabyChina(data) {
-      data.sort(function(a, b) {
-        return parseFloat(b.china) - parseFloat(a.china);
-      });
-    }
 
     function cleanData(data) {
       for (var i = 0; i < data.length; i++) {
@@ -455,11 +491,6 @@ $.ajax({
     function handleClick(d, i) {
           d3.select(this).classed("highlight-label", !d3.select(this).classed("highlight-label"));
         }
-
-    function sortChina(){
-        sortDatabyChina(data);
-        refresh(data);
-    }
 
   },
   error: function() {
