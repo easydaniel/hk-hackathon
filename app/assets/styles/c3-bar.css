@@ -14,7 +14,7 @@ body{
   scrollbar-face-color: slategray;
   scrollbar-track-color: #b8c0c8;
 }
-
+#0CF
 text, p{
   font-family: "Fenton";
 }
@@ -134,11 +134,6 @@ text, p{
   margin: 0 auto;
   width: 300px;
   height: 300px;
-}
-.visName:before{
-  content: 'yo';
-  position: absolute;
-  color:black;
 }
 .visName,.InfoName{
   margin-bottom: 30px;
@@ -337,16 +332,6 @@ rect{
   font-weight: regular;
   fill:white;
   font-family: 'Fenton', sans-serif;
-}
-.leftlabel:before{
-  content: 'yo';
-  position: absolute;
-  color:black;
-}
-.leftlabel:after{
-  content: 'yo';
-  position: absolute;
-  color:black;
 }
 .leftlabel, .rightlabel {
   font-size: 2.5em;
