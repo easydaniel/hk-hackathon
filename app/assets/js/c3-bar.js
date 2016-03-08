@@ -197,8 +197,16 @@ function drow(Daniel_told_me_this_is_data){
         return i === j;
       }).attr("class", c);
 
+      //nowHover = d;
+      if(c === "bar"){
+        document.querySelector("#follower").innerHTML = "";
+        $("#follower").css({display: "none" });
+      }else{
+        document.querySelector("#follower").innerHTML = d.name;
+        $("#follower").css({display: "block" });
+      }
+      
 
-      nowHover = d;
       $(this).click(function() {
         
         nowclick = d;
@@ -209,7 +217,6 @@ function drow(Daniel_told_me_this_is_data){
             ['China', nowclick.china],
           ]
         });
-
         document.querySelector("#itemName").innerHTML = nowclick.name;
         document.querySelector("#trendName").innerHTML = nowclick.name;
         /* detect for font size*/
@@ -364,6 +371,7 @@ function drow(Daniel_told_me_this_is_data){
         });
     }
     else { sortedData = data; }
+    //console.log(sortedData);
 
     var bars = d3.selectAll("g.bar");
     bars.remove();
@@ -527,3 +535,14 @@ var t = new Trianglify({
 });
 var pattern = t.generate(window.innerWidth, window.innerWidth*2);
 document.body.setAttribute('style', 'background-image: '+ pattern.dataUrl);
+
+
+  $(document).bind('mousemove', function(e){
+    $('#follower').css({
+       left:  e.pageX + 20,
+       top:   e.pageY,
+    });    
+  });
+
+
+
