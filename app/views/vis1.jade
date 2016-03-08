@@ -6,32 +6,46 @@ html(lang='en')
     title C3 bar
     // Load c3.css
     link(href='/styles/c3.min.css', rel='stylesheet', type='text/css')
-    link(href='/styles/c3-bar.css', rel='stylesheet', type='text/css')
+    link(rel='stylesheet', type='text/css', href='/styles/c3-bar.css')
     // Load d3.js and c3.js
-    script(src='/js/d3.min.js', type='text/javascript')
+    script(type='text/javascript', src='/js/d3.min.js')
+    script(src='/js/trianglify.min.js')
     script(src='/js/jquery.min.js', type='text/javascript')
     script(src='/js/c3.min.js')
   body
     .navbar
       .hk-logo
-        img(src='/images/hk-logo-data.png')
+        img(src='/images/data-hk-word.png')
     .timeBar
       input#monthTime(min='0', max='66', type='range', value='0')
       #showTimebyJSON 2013-03
     .dataBoard
       // input id="generate" value="Randomise data" type="button"
       .row
-        .content
-          #vis
-        .dataInfo
-          .singleItemBox
-            #singleItem
-            #itemNumber
-              p 
-            #itemName 
-      .row
-        #trend 
-    svg
+        .visBox
+          .visName
+            | 歷年進口長條圖
+          .content
+            #vis
+        .singleBox
+          .InfoName
+            | 單一貨物比較圖
+          .dataInfo
+            .singleItemBox
+              #singleItem
+              #itemNumber
+              #itemName -
+      .trendbox
+        #trendName NAN
+        #trend
+    .footer
+      p
+        | HK-hackathon
+        br
+        | x
+        br
+        | Produce by NOOOOSE
+    svg.svg-content
       defs
         lineargradient#myGradient(x1='-50%', y1='40%', x2='50%', y2='100%', spreadmethod='pad')
           stop(offset='0%', stop-color='#FFE066', stop-opacity='1')

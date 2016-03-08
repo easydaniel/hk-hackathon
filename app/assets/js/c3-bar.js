@@ -16,7 +16,7 @@ $.ajax({
   dataType: "json",
 
   success: function(Jdata) {
-    // console.log("SUCCESS!!!" + Jdata);
+    console.log("SUCCESS!!!");
     totalMonth = Jdata;
 
     data = totalMonth[0].data;
@@ -28,24 +28,24 @@ $.ajax({
     });
 
     var w = parseInt(d3.select(".content").style("width"), 10),
-      h = 20 * data.length,
-      topMargin = 50,
-      labelSpace = 30 + w / 100,
-      innerMargin = w / 2 + labelSpace,
-      outerMargin = 20,
-      dataRange = d3.max(data.map(function(d) {
-        return Math.max(d.america, d.china)
-      }));
+    h = 20 * data.length,
+    topMargin = 50,
+    labelSpace = 30 + w / 100,
+    innerMargin = w / 2 + labelSpace,
+    outerMargin = 20,
+    dataRange = d3.max(data.map(function(d) {
+      return Math.max(d.america, d.china)
+    }));
     leftLabel = "America",
-      rightLabel = "China";
+    rightLabel = "China";
     dataRange = 2500;
     /* edit with care */
     var chartWidth = w - innerMargin - outerMargin,
-      barWidth = h / data.length,
-      yScale = d3.scale.linear().domain([0, data.length]).range([0, h - topMargin]),
-      total = d3.scale.sqrt().domain([0, dataRange]).range([0, chartWidth - labelSpace]).clamp(true),
-      commas = d3.format(",.0f"),
-      gap = barWidth * 0.4;
+    barWidth = h / data.length,
+    yScale = d3.scale.linear().domain([0, data.length]).range([0, h - topMargin]),
+    total = d3.scale.sqrt().domain([0, dataRange]).range([0, chartWidth - labelSpace]).clamp(true),
+    commas = d3.format(",.0f"),
+    gap = barWidth * 0.4;
     /* main panel */
     var vis = d3.select("#vis").append("svg")
       .attr("width", w)
@@ -85,31 +85,31 @@ $.ajax({
       .attr("pointer-events", "all")
       //.on('click', function(d,i){ d3.select(this).style("fill", "red"); });
 
-    var singleDataChart = c3.generate({
-      bindto: '#singleItem',
-      data: {
-        columns: [
-          // ['America', nowHover.america],
-          // ['China', nowHover.china],
-        ],
-        colors: {
-          America: '#247BA0',
-          China: '#F25F5C'
+      var singleDataChart = c3.generate({
+        bindto: '#singleItem',
+        data: {
+          columns: [
+            // ['America', nowHover.america],
+            // ['China', nowHover.china],
+          ],
+          colors: {
+            America: '#247BA0',
+            China: '#F25F5C'
 
+          },
+          type: 'donut',
+          //onclick: function (d, i) { console.log("onclick", d, i); },
+          onmouseover: function(d, i) {
+            // console.log("fuck", d, i);
+          },
+          onmouseout: function(d, i) {
+            // console.log("onmouseout", d, i);
+          }
         },
-        type: 'donut',
-        //onclick: function (d, i) { console.log("onclick", d, i); },
-        onmouseover: function(d, i) {
-          // console.log("fuck", d, i);
-        },
-        onmouseout: function(d, i) {
-          // console.log("onmouseout", d, i);
+        donut: {
+          //title: nowHover.america
         }
-      },
-      donut: {
-        //title: nowHover.america
-      }
-    });
+      });
     singleDataChart.resize({
       height: 300,
       width: 300
@@ -153,7 +153,7 @@ $.ajax({
 
         nowHover = d;
         $(this).click(function() {
-          
+
           nowclick = d;
 
           singleDataChart.load({
@@ -166,18 +166,18 @@ $.ajax({
           document.querySelector("#trendName").innerHTML = nowclick.name;
           /* detect for font size*/
           var fontSize = $('#trendName'),
-              textLength = fontSize.text().length;
+          textLength = fontSize.text().length;
           //console.log(textLength);
           if(textLength > 30) {
-              fontSize.css('font-size', '1.4em');
+            fontSize.css('font-size', '1.4em');
           } else if(textLength > 20) {
-              fontSize.css('font-size', '2em');
+            fontSize.css('font-size', '2em');
           } else if(textLength > 10) {
-              fontSize.css('font-size', '3em');
+            fontSize.css('font-size', '3em');
           }
           //bar.on("click", highlight("click-highlight bar"))
 
-       var trendAmerica = ["America"].concat(Jdata.map(function(item) {
+          var trendAmerica = ["America"].concat(Jdata.map(function(item) {
             var f = item.data.find(function(i) {
               return i.name === nowclick.name;
             })
@@ -219,13 +219,13 @@ $.ajax({
     bar
       .on("mouseover", highlight("highlight bar"))
       .on("mouseout", highlight("bar"));
-    
-     bar.append("text")
-         .attr("class", "shared")
-         .attr("x", w/2)
-         //.attr("dy", barWidth/2)
-         .attr("text-anchor", "middle")
-         .text(function(d) { return d.name; });
+
+    bar.append("text")
+      .attr("class", "shared")
+      .attr("x", w/2)
+      //.attr("dy", barWidth/2)
+      .attr("text-anchor", "middle")
+      .text(function(d) { return d.name; });
 
     bar.append("rect")
       .attr("class", "leftbar")
@@ -233,9 +233,9 @@ $.ajax({
       .attr("x", function(d) {
         return innerMargin - total(d.america) - 2 * labelSpace;
       })
-      .attr("width", function(d) {
-        return total(d.america)
-      })
+    .attr("width", function(d) {
+      return total(d.america)
+    })
 
     bar.append("rect")
       .attr("class", "rightbar")
@@ -262,6 +262,20 @@ $.ajax({
         return d.china;
       });
 
+<<<<<<< HEAD
+=======
+    /*d3.select(".rightlabel").on("click", function() {
+      console.log("yo");
+      tempMonthData = data;
+      sortDatabyChina(tempMonthData);
+      for (var i=0; i<data.length; i++) {
+      data[i].america = tempMonthData[i].america;
+      data[i].china = tempMonthData[i].china;
+      }
+      refresh(data);
+      });*/
+
+>>>>>>> cbc92c3147e7f4cbb00f6351fee5fd467d2da8b2
 
     resize();
     d3.select(window).on("resize", resize);
@@ -275,10 +289,10 @@ $.ajax({
       dataRange = 2500;
       /* edit with care */
       var chartWidth = w - innerMargin - outerMargin,
-        barWidth = h / data.length,
-        yScale = d3.scale.linear().domain([0, data.length]).range([0, h - topMargin]),
-        total = d3.scale.sqrt().domain([0, dataRange]).range([0, chartWidth - labelSpace]).clamp(true),
-        commas = d3.format(",.0f");
+      barWidth = h / data.length,
+      yScale = d3.scale.linear().domain([0, data.length]).range([0, h - topMargin]),
+      total = d3.scale.sqrt().domain([0, dataRange]).range([0, chartWidth - labelSpace]).clamp(true),
+      commas = d3.format(",.0f");
       gap = barWidth * 0.4;
 
       var vis = d3.select("svg")
@@ -299,7 +313,7 @@ $.ajax({
         .attr("x", innerMargin + 5)
         .attr("y", topMargin - 3)
 
-      var wholebar = vis.selectAll(".onebar")
+        var wholebar = vis.selectAll(".onebar")
         .attr("width", w)
         .attr("height", barWidth - gap);
 
@@ -317,33 +331,34 @@ $.ajax({
         .attr("x", function(d) {
           return innerMargin - total(d.america) - 1 * labelSpace;
         })
-        .attr("width", function(d) {
-          return total(d.america)
-        })
-        .attr("height", barWidth - gap);
+      .attr("width", function(d) {
+        return total(d.america)
+      })
+      .attr("height", barWidth - gap);
 
       bar.selectAll(".leftbar-text")
         .attr("x", function(d) {
           return innerMargin - total(d.america) - 1 * labelSpace;
         })
-        .attr("dx", -10)
+      .attr("dx", -10)
 
-      bar.selectAll(".rightbar")
+        bar.selectAll(".rightbar")
         .attr("x", function(d) {
           return innerMargin - 1 * labelSpace;
         })
-        .attr("width", function(d) {
-          return total(d.china)
-        })
-        .attr("height", barWidth - gap);
+      .attr("width", function(d) {
+        return total(d.china)
+      })
+      .attr("height", barWidth - gap);
 
 
       bar.selectAll(".rightbar-text")
         .attr("x", function(d) {
           return innerMargin + total(d.china) - 1 * labelSpace;
         })
-        .attr("dx", 10)
+      .attr("dx", 10)
 
+<<<<<<< HEAD
       d3.select(".rightlabel").on("click", function(e) {
 
         d3.select(this).style("fill", "#FFE066");
@@ -351,6 +366,13 @@ $.ajax({
         DANIEL_CALL_IT_state = 1;
         refresh('china');
       });
+=======
+        d3.select(".rightlabel").on("click", function(e) {
+          d3.select(this).style("fill", "#FFE066");
+          d3.select('.leftlabel').style("fill", "#474B54");
+          refresh('china');
+        });
+>>>>>>> cbc92c3147e7f4cbb00f6351fee5fd467d2da8b2
 
       d3.select(".leftlabel").on("click", function(e) {
 
@@ -361,16 +383,16 @@ $.ajax({
       });
     }
 
-    function refresh(tag) { 
+    function refresh(tag) {
       sortedData = [];
       if (tag === 'america') {
-          sortedData = data.sort(function(i, j) {
-            return j.america - i.america;
-          });
+        sortedData = data.sort(function(i, j) {
+          return j.america - i.america;
+        });
       } else if (tag == 'china') {
-          sortedData = data.sort(function(i, j) {
-            return j.china - i.china;
-          });
+        sortedData = data.sort(function(i, j) {
+          return j.china - i.china;
+        });
       }
       else { sortedData = data; }
 
@@ -392,16 +414,16 @@ $.ajax({
         .attr("fill", "none")
         .attr("pointer-events", "all")
         //.on('click', function(d,i){ d3.select(this).style("fill", "red"); });
-      bar
+        bar
         .on("mouseover", highlight("highlight bar"))
         .on("mouseout", highlight("bar"));
-      
-       bar.append("text")
-           .attr("class", "shared")
-           .attr("x", w/2)
-           //.attr("dy", barWidth/2)
-           .attr("text-anchor", "middle")
-           .text(function(d) { return d.name; });
+
+      bar.append("text")
+        .attr("class", "shared")
+        .attr("x", w/2)
+        //.attr("dy", barWidth/2)
+        .attr("text-anchor", "middle")
+        .text(function(d) { return d.name; });
 
       bar.append("rect")
         .attr("class", "leftbar")
@@ -409,9 +431,9 @@ $.ajax({
         .attr("x", function(d) {
           return innerMargin - total(d.america) - 2 * labelSpace;
         })
-        .attr("width", function(d) {
-          return total(d.america)
-        })
+      .attr("width", function(d) {
+        return total(d.america)
+      })
 
       bar.append("rect")
         .attr("class", "rightbar")
@@ -437,7 +459,7 @@ $.ajax({
         .text(function(d) {
           return d.china;
         });
-        resize();
+      resize();
     }
 
     rng = document.querySelector("#monthTime");
@@ -447,6 +469,7 @@ $.ajax({
 
     function read(evtType) {
       rng.addEventListener(evtType, function() {
+<<<<<<< HEAD
         
         if(rng_NOW_STATE === rng.value){
           console.log("this is same value");
@@ -468,8 +491,25 @@ $.ajax({
           }else{
             refresh('china'); }
           }
+=======
+        //window.requestAnimationFrame(function () {
+        //  document.querySelector("#showTime").innerHTML = rng.value;
+        //});
+
+        data = totalMonth[rng.value].data;
+        theYear = totalMonth[rng.value].year;
+        theMonth = totalMonth[rng.value].month;
+        cleanData(data);
+
+        setTimeout(function(){refresh(data);}, 100);
+
+        window.requestAnimationFrame(function() {
+          document.querySelector("#showTimebyJSON").innerHTML = theYear + "-" + theMonth;
+        });
+
+>>>>>>> cbc92c3147e7f4cbb00f6351fee5fd467d2da8b2
       });
-      
+
     }
 
     function cleanData(data) {
@@ -487,6 +527,7 @@ $.ajax({
     }
 
     function handleClick(d, i) {
+<<<<<<< HEAD
           d3.select(this).classed("highlight-label", !d3.select(this).classed("highlight-label"));
         }
     //good background : 0 , 3, 5,  
@@ -497,6 +538,10 @@ $.ajax({
     });
     var pattern = t.generate(window.innerWidth, window.innerWidth*2);
     document.body.setAttribute('style', 'background-image: '+ pattern.dataUrl);
+=======
+      d3.select(this).classed("highlight-label", !d3.select(this).classed("highlight-label"));
+    }
+>>>>>>> cbc92c3147e7f4cbb00f6351fee5fd467d2da8b2
 
   },
   error: function() {
