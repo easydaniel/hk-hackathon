@@ -3,6 +3,7 @@ var totalMonth;
 var tempMonthData;
 var data;
 var rng;
+var rng_NOW_STATE;
 var theYear;
 var theMonth;
 var nowHover = {};
@@ -261,17 +262,6 @@ $.ajax({
         return d.china;
       });
 
-    /*d3.select(".rightlabel").on("click", function() {
-      console.log("yo");
-      tempMonthData = data;
-      sortDatabyChina(tempMonthData);
-        for (var i=0; i<data.length; i++) {
-          data[i].america = tempMonthData[i].america;
-          data[i].china = tempMonthData[i].china;
-        }
-      refresh(data);
-    });*/
-
 
     resize();
     d3.select(window).on("resize", resize);
@@ -355,14 +345,18 @@ $.ajax({
         .attr("dx", 10)
 
       d3.select(".rightlabel").on("click", function(e) {
+
         d3.select(this).style("fill", "#FFE066");
         d3.select('.leftlabel').style("fill", "#474B54");
+        DANIEL_CALL_IT_state = 1;
         refresh('china');
       });
 
       d3.select(".leftlabel").on("click", function(e) {
+
         d3.select(this).style("fill", "#FFE066");
         d3.select('.rightlabel').style("fill", "#474B54");
+        DANIEL_CALL_IT_state = 0;
         refresh('america');
       });
     }
@@ -447,32 +441,36 @@ $.ajax({
     }
 
     rng = document.querySelector("#monthTime");
-
+    rng_NOW_STATE = 1000;
     read("mousedown");
     read("mousemove");
 
     function read(evtType) {
       rng.addEventListener(evtType, function() {
-        //window.requestAnimationFrame(function () {
-        //  document.querySelector("#showTime").innerHTML = rng.value;
-        //});
-        console.log(rng.value);
-
-        data = totalMonth[rng.value].data;
-        theYear = totalMonth[rng.value].year;
-        theMonth = totalMonth[rng.value].month;
-        cleanData(data);
-
-        setTimeout(function(){refresh(data);}, 100);
-
-        window.requestAnimationFrame(function() {
-          document.querySelector("#showTimebyJSON").innerHTML = theYear + "-" + theMonth;
-        });
         
+        if(rng_NOW_STATE === rng.value){
+          console.log("this is same value");
+        }else{
+          console.log("really do refresh");
+          rng_NOW_STATE = rng.value;
+
+          data = totalMonth[rng.value].data;
+          theYear = totalMonth[rng.value].year;
+          theMonth = totalMonth[rng.value].month;
+          cleanData(data);
+
+          window.requestAnimationFrame(function() {
+            document.querySelector("#showTimebyJSON").innerHTML = theYear + "-" + theMonth;
+          });
+
+          if(DANIEL_CALL_IT_state === 0){
+           refresh('america'); 
+          }else{
+            refresh('china'); }
+          }
       });
       
     }
-
 
     function cleanData(data) {
       for (var i = 0; i < data.length; i++) {
@@ -491,6 +489,14 @@ $.ajax({
     function handleClick(d, i) {
           d3.select(this).classed("highlight-label", !d3.select(this).classed("highlight-label"));
         }
+    //good background : 0 , 3, 5,  
+    var t = new Trianglify({
+      x_gradient: ["#ffffbf","#abdda4","#2b83ba"],
+      noiseIntensity: 0,
+      cellsize: 130
+    });
+    var pattern = t.generate(window.innerWidth, window.innerWidth*2);
+    document.body.setAttribute('style', 'background-image: '+ pattern.dataUrl);
 
   },
   error: function() {

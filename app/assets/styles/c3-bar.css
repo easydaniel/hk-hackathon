@@ -1,5 +1,5 @@
 body{
-  background: linear-gradient(to bottom right,#3C91BC 0%, #9AB87A 50%, rgba(255, 128, 128, 0.65) 80%);
+  //background: linear-gradient(to bottom right,#3C91BC 0%, #9AB87A 50%, rgba(255, 128, 128, 0.65) 80%);
   //linear-gradient(90deg, rgba(255, 128, 128, 0.65) 0%, rgba(255, 164, 128, 0.65) 10%, rgba(255, 202, 128, 0.65) 20%, rgba(255, 240, 128, 0.65) 30%, rgba(232, 255, 128, 0.65) 40%, rgba(193, 255, 128, 0.65) 50%, rgba(155, 255, 128, 0.65) 60%, rgba(128, 255, 138, 0.65) 70%, rgba(128, 255, 176, 0.65) 80%, rgba(128, 255, 215, 0.65) 90%, rgba(128, 255, 253, 0.65) 100%),
   //linear-gradient(-90deg, rgba(204, 255, 254, 0.45) 0%, rgba(204, 241, 255, 0.45) 10%, rgba(204, 225, 255, 0.45) 20%, rgba(204, 210, 255, 0.45) 30%, rgba(213, 204, 255, 0.45) 40%, rgba(229, 204, 255, 0.45) 50%, rgba(244, 204, 255, 0.45) 60%, rgba(255, 204, 251, 0.45) 70%, rgba(255, 204, 235, 0.45) 80%, rgba(255, 204, 220, 0.45) 90%, rgba(255, 204, 205, 0.45) 100%);
   //background:
@@ -7,6 +7,7 @@ body{
   //linear-gradient(90deg, skyblue, transparent),
   //linear-gradient(-90deg, coral, transparent);
   //background-blend-mode: screen;
+  background-repeat: repeat;  
   padding: 0;
   margin: 0;
 
@@ -133,6 +134,11 @@ text, p{
   margin: 0 auto;
   width: 300px;
   height: 300px;
+}
+.visName:before{
+  content: 'yo';
+  position: absolute;
+  color:black;
 }
 .visName,.InfoName{
   margin-bottom: 30px;
@@ -299,16 +305,16 @@ input[type=range]:focus::-ms-fill-upper {
 
 
 .c3-chart-arcs-title{
-  fill: #474B54;
+  fill: white;
 }
 .c3-legend-item{
-  fill: #474B54;
+  fill: white;
   font-size: 2em;
 }
 .c3-chart-arc > text{
   font-size: 1.6em;
   stroke-width: 1px;
-  stroke: #474B54;
+  stroke: white;
 }
 .c3-axis{
   fill:#474B54;
@@ -332,12 +338,23 @@ rect{
   fill:white;
   font-family: 'Fenton', sans-serif;
 }
+.leftlabel:before{
+  content: 'yo';
+  position: absolute;
+  color:black;
+}
+.leftlabel:after{
+  content: 'yo';
+  position: absolute;
+  color:black;
+}
 .leftlabel, .rightlabel {
   font-size: 2.5em;
   font-weight: regular;
   fill:#474B54;
   font-family: 'Fenton', sans-serif;
   cursor: pointer;
+  transition: all .3s ease;
 }
 .rightbar{
   fill: #F25F5C;
@@ -352,8 +369,8 @@ rect{
 	transition: stroke-width .5s;
 }
 .highlight rect.leftbar, .highlight rect.rightbar {
-  fill: #474B54;
-  stroke-width: 5px;
+  fill: #FFE066;
+  stroke-width: 3px;
   stroke: #474B54;
   padding: 50px;
 }
@@ -364,6 +381,9 @@ text.leftbar-text, text.rightbar-text, text.shared {
   font-size: 120%;
   display: block;
   fill: #474B54;
+}
+.highlight .shared {
+  display: none;
 }
 .click-highlight text{
   font-size: 120%;
