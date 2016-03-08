@@ -1,5 +1,5 @@
 console.log("ready!");
-var totalMonth;
+//var totalMonth;
 var tempMonthData;
 var importData, exportData;
 var data;
@@ -23,6 +23,7 @@ $.ajax({
   dataType: "json",
   success: function(Jdata) {
     exportData = Jdata;
+    console.log("export");
   },
   error: function() {
     console.log("outport ERROR!!!");
@@ -36,6 +37,7 @@ $.ajax({
   dataType: "json",
   success: function(Jdata) {
     importData = Jdata;
+    console.log("import");
   },
   error: function() {
     console.log("import ERROR!!!");
@@ -63,7 +65,7 @@ $(".export").on("click", function(){
 
 function drow(Daniel_told_me_this_is_data){
 
-  totalMonth = Daniel_told_me_this_is_data;
+  var totalMonth = Daniel_told_me_this_is_data;
 
   d3.select("svg").remove();
   data = totalMonth[0].data;
@@ -465,6 +467,7 @@ function drow(Daniel_told_me_this_is_data){
 
   rng = document.querySelector("#monthTime");
   rng_NOW_STATE = 1000;
+
   read("mousedown");
   read("mousemove");
 
