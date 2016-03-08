@@ -162,6 +162,7 @@ $.ajax({
             ]
           });
           document.querySelector("#itemName").innerHTML = nowclick.name;
+          document.querySelector("#trendName").innerHTML = nowclick.name;
           /* detect for font size*/
           var fontSize = $('#trendName'),
           textLength = fontSize.text().length;
