@@ -15,7 +15,7 @@ $.ajax({
   dataType: "json",
 
   success: function(Jdata) {
-    // console.log("SUCCESS!!!" + Jdata);
+    console.log("SUCCESS!!!");
     totalMonth = Jdata;
 
     data = totalMonth[0].data;
@@ -162,7 +162,6 @@ $.ajax({
             ]
           });
           document.querySelector("#itemName").innerHTML = nowclick.name;
-          document.querySelector("#trendName").innerHTML = nowclick.name;
           /* detect for font size*/
           var fontSize = $('#trendName'),
           textLength = fontSize.text().length;
@@ -377,101 +376,72 @@ $.ajax({
         sortedData = data.sort(function(i, j) {
           return j.china - i.china;
         });
-      } else {
-        sortedData = data;
       }
+      else { sortedData = data; }
 
-      var bars = d3.selectAll("g.bar")
-        .data(sortedData);
-
-      bars.selectAll(".shared")
+      var bars = d3.selectAll("g.bar");
+      bars.remove();
+      /*female bars and data labels */
+      var bar = vis.selectAll("g.bar")
         .data(sortedData)
+        .enter().append("g")
+        .attr("class", "bar")
+        .attr("transform", function(d, i) {
+          return "translate(0," + (yScale(i)*2 + topMargin) + ")";
+        })
+
+      var wholebar = bar.append("rect")
+        .attr("class", "onebar")
+        .attr("width", w)
+        .attr("height", barWidth - gap)
+        .attr("fill", "none")
+        .attr("pointer-events", "all")
+        //.on('click', function(d,i){ d3.select(this).style("fill", "red"); });
+        bar
+        .on("mouseover", highlight("highlight bar"))
+        .on("mouseout", highlight("bar"));
+
+      bar.append("text")
+        .attr("class", "shared")
+        .attr("x", w/2)
+        //.attr("dy", barWidth/2)
+        .attr("text-anchor", "middle")
         .text(function(d) { return d.name; });
 
-      bars.selectAll("rect.leftbar")
-        .data(sortedData)
-        .transition()
-        .attr("x", function(d) { return innerMargin - total(d.america) - 1 * labelSpace; })
-        .attr("width", function(d) { return total(d.america)});
-      bars.selectAll("rect.rightbar")
-        .data(sortedData)
-        .transition()
-        .attr("x", function(d) { return innerMargin - 1 * labelSpace; })
-        .attr("width", function(d) { return total(d.china);});
+      bar.append("rect")
+        .attr("class", "leftbar")
+        .attr("height", barWidth - gap)
+        .attr("x", function(d) {
+          return innerMargin - total(d.america) - 2 * labelSpace;
+        })
+      .attr("width", function(d) {
+        return total(d.america)
+      })
 
-      bars.selectAll("text.leftbar-text")
-        .data(sortedData)
-        .text(function(d) { return commas(d.america); })
-        .transition()
-        .attr("x", function(d) { return innerMargin - total(d.america) - 1 * labelSpace; });
-      bars.selectAll("text.rightbar-text")
-        .data(sortedData)
-        .text(function(d) { return commas(d.china); })
-        .transition()
-        .attr("x", function(d) { return innerMargin + total(d.china) - 1 * labelSpace;; });
-      //var bars = d3.selectAll("g.bar");
-      //bars.remove();
-      //[>female bars and data labels <]
-      //var bar = vis.selectAll("g.bar")
-      //.data(sortedData)
-      //.append("g")
-      //.attr("class", "bar")
-      //.attr("transform", function(d, i) {
-      //return "translate(0," + (yScale(i)*2 + topMargin) + ")";
-      //})
+      bar.append("rect")
+        .attr("class", "rightbar")
+        .attr("height", barWidth - gap)
+        .attr("x", innerMargin)
+        .attr("width", function(d) {
+          return total(d.china)
+        })
 
-      //var wholebar = bar.append("rect")
-      //.attr("class", "onebar")
-      //.attr("width", w)
-      //.attr("height", barWidth - gap)
-      //.attr("fill", "none")
-      //.attr("pointer-events", "all")
-      ////.on('click', function(d,i){ d3.select(this).style("fill", "red"); });
-      //bar
-      //.on("mouseover", highlight("highlight bar"))
-      //.on("mouseout", highlight("bar"));
+      bar.append("text")
+        .attr("class", "leftbar-text")
+        .attr("dx", -10)
+        .attr("dy", ".65em")
+        .attr("text-anchor", "end")
+        .text(function(d) {
+          return d.america;
+        });
 
-      //bar.append("text")
-      //.attr("class", "shared")
-      //.attr("x", w/2)
-      ////.attr("dy", barWidth/2)
-      //.attr("text-anchor", "middle")
-      //.text(function(d) { return d.name; });
-
-      //bar.append("rect")
-      //.attr("class", "leftbar")
-      //.attr("height", barWidth - gap)
-      //.attr("x", function(d) {
-      //return innerMargin - total(d.america) - 2 * labelSpace;
-      //})
-      //.attr("width", function(d) {
-      //return total(d.america)
-      //})
-
-      //bar.append("rect")
-      //.attr("class", "rightbar")
-      //.attr("height", barWidth - gap)
-      //.attr("x", innerMargin)
-      //.attr("width", function(d) {
-      //return total(d.china)
-      //})
-
-      //bar.append("text")
-      //.attr("class", "leftbar-text")
-      //.attr("dx", -10)
-      //.attr("dy", ".65em")
-      //.attr("text-anchor", "end")
-      //.text(function(d) {
-      //return d.america;
-      //});
-
-      //bar.append("text")
-      //.attr("class", "rightbar-text")
-      //.attr("dx", 5)
-      //.attr("dy", ".65em")
-      //.text(function(d) {
-      //return d.china;
-      //});
+      bar.append("text")
+        .attr("class", "rightbar-text")
+        .attr("dx", 5)
+        .attr("dy", ".65em")
+        .text(function(d) {
+          return d.china;
+        });
       resize();
     }
 
@@ -485,7 +455,6 @@ $.ajax({
         //window.requestAnimationFrame(function () {
         //  document.querySelector("#showTime").innerHTML = rng.value;
         //});
-        console.log(rng.value);
 
         data = totalMonth[rng.value].data;
         theYear = totalMonth[rng.value].year;
