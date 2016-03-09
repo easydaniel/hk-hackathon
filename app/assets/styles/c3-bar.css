@@ -1,3 +1,7 @@
+@import url(/font/Fenton-Medium.otf);
+@import url(/font/Fenton-Bold.otf);
+@import url(/font/Kust.otf);
+
 body{
   //background: linear-gradient(to bottom right,#3C91BC 0%, #9AB87A 50%, rgba(255, 128, 128, 0.65) 80%);
   //linear-gradient(90deg, rgba(255, 128, 128, 0.65) 0%, rgba(255, 164, 128, 0.65) 10%, rgba(255, 202, 128, 0.65) 20%, rgba(255, 240, 128, 0.65) 30%, rgba(232, 255, 128, 0.65) 40%, rgba(193, 255, 128, 0.65) 50%, rgba(155, 255, 128, 0.65) 60%, rgba(128, 255, 138, 0.65) 70%, rgba(128, 255, 176, 0.65) 80%, rgba(128, 255, 215, 0.65) 90%, rgba(128, 255, 253, 0.65) 100%),
